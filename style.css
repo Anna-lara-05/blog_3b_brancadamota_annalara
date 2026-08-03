@@ -11,3 +11,11 @@ body{
 max-width: 100vw;
 font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
+
+header {
+    background-color: #C7D5F0;
+    color: #234480;
+    text-align: center;
+    margin: 0 auto;
+    padding: 16px;
+}
