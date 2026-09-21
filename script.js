@@ -108,7 +108,7 @@ rtigo,indice) => {
 
         const botoes = artigo.querySelectorAll("button");
 
-        if (botoes.lenght < 2) {
+        if (botoes.langht < 2) {
             return;
         }
 
