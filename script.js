@@ -1,9 +1,10 @@
-document.addEventListener("DOMContentLoaded", () =>{
+
+document.addEventListener("DOMContentLoaded", () => {
     prepararReacoes();
     prepararAnimacaoCards();
     criarBotaoTopo();
-})
-
+    prepararModoEscuro();   // nova
+});
 
 function prepararReacoes() {
     const artigos = document.querySelectorAll("article");
@@ -223,5 +224,27 @@ function criarBotaoTopo() {
 
     botao.addEventListener("click", () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+}
+// Botão que alterna entre modo claro e escuro
+function prepararModoEscuro() {
+    const botao = document.createElement("button");
+    botao.id = "botao-tema";
+    document.body.appendChild(botao);
+
+    function aplicarTema(escuro) {
+        document.body.classList.toggle("escuro", escuro);
+        botao.textContent = escuro ? "☀️" : "🌙";
+        botao.setAttribute("aria-label", escuro ? "Ativar modo claro" : "Ativar modo escuro");
+    }
+
+    // lê a escolha salva (se nunca escolheu, começa no claro)
+    let escuro = localStorage.getItem("tema") === "escuro";
+    aplicarTema(escuro);
+
+    botao.addEventListener("click", () => {
+        escuro = !escuro;
+        aplicarTema(escuro);
+        localStorage.setItem("tema", escuro ? "escuro" : "claro");
     });
 }
