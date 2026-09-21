@@ -4,6 +4,30 @@ document.addEventListener("DOMContentLoaded", () => {
     prepararAnimacaoCards();
     criarBotaoTopo();
     prepararModoEscuro();   // nova
+    document.addEventListener("DOMContentLoaded", () => {
+    prepararReacoes();
+    prepararAnimacaoCards();
+    criarBotaoTopo();
+    criarBotaoTema();
+    criarBarraProgresso();   // nova
+});
+
+// Barra no topo que mostra quanto da página já foi lido
+function criarBarraProgresso() {
+    const barra = document.createElement("div");
+    barra.id = "barra-progresso";
+    document.body.appendChild(barra);
+
+    function atualizar() {
+        const rolado = window.scrollY;                                  // quanto já rolou
+        const total = document.documentElement.scrollHeight - window.innerHeight; // quanto dá para rolar
+        const porcentagem = total > 0 ? (rolado / total) * 100 : 0;
+        barra.style.width = porcentagem + "%";
+    }
+
+    window.addEventListener("scroll", atualizar);
+    atualizar();
+}
 });
 
 function prepararReacoes() {
