@@ -61,8 +61,36 @@ img {
 }
 
 article {
-    border-radius: 16px;
-    animation: aparecer 0.6s ease backwards;
+    transition: transform 0.3s ease, box-shadow 0.3s ease,
+                opacity 0.6s ease, translate 0.6s ease;
+}
+
+/* estado inicial: invisível e 40px mais baixo */
+article.escondido {
+    opacity: 0;
+    translate: 0 40px;
+}
+
+#botao-topo {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--cor-primaria);
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+#botao-topo.visivel {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 img {

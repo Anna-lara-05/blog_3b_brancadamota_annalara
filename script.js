@@ -147,3 +147,81 @@ rtigo,indice) => {
         });
     })
 }
+document.addEventListener("DOMContentLoaded", () => {
+    prepararReacoes();
+    prepararAnimacaoCards();
+    criarBotaoTopo();
+});
+
+// Contadores dos botões de reação (salvos no localStorage)
+function prepararReacoes() {
+    const artigos = document.querySelectorAll("article");
+
+    artigos.forEach((artigo, indice) => {
+        const botoes = artigo.querySelectorAll("button");
+        if (botoes.length < 2) return;
+
+        const botaoUM = botoes[0];
+        const botaoDOIS = botoes[1];
+        const contadorUM = botaoUM.querySelector("span");
+        const contadorDOIS = botaoDOIS.querySelector("span");
+
+        const idcard = `card-${indice + 1}`;
+        const chaveUM = `${idcard}-botaoUM`;
+        const chaveDOIS = `${idcard}-botaoDOIS`;
+
+        let UM = Number(localStorage.getItem(chaveUM)) || 0;
+        let DOIS = Number(localStorage.getItem(chaveDOIS)) || 0;
+
+        contadorUM.textContent = UM;
+        contadorDOIS.textContent = DOIS;
+
+        botaoUM.addEventListener("click", () => {
+            UM++;
+            contadorUM.textContent = UM;
+            localStorage.setItem(chaveUM, UM);
+        });
+
+        botaoDOIS.addEventListener("click", () => {
+            DOIS++;
+            contadorDOIS.textContent = DOIS;
+            localStorage.setItem(chaveDOIS, DOIS);
+        });
+    });
+}
+
+// Cards aparecem quando entram na tela
+function prepararAnimacaoCards() {
+    const cards = document.querySelectorAll("article");
+
+    const observador = new IntersectionObserver((entradas) => {
+        entradas.forEach((entrada) => {
+            if (entrada.isIntersecting) {
+                entrada.target.classList.remove("escondido");
+                observador.unobserve(entrada.target); // anima só uma vez
+            }
+        });
+    }, { threshold: 0.15 });
+
+    cards.forEach((card) => {
+        card.classList.add("escondido");
+        observador.observe(card);
+    });
+}
+
+// Botão flutuante para voltar ao topo
+function criarBotaoTopo() {
+    const botao = document.createElement("button");
+    botao.id = "botao-topo";
+    botao.textContent = "↑";
+    botao.setAttribute("aria-label", "Voltar ao topo");
+    document.body.appendChild(botao);
+
+    window.addEventListener("scroll", () => {
+        botao.classList.toggle("visivel", window.scrollY > 300);
+    });
+
+    botao.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+}
